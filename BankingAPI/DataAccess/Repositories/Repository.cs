@@ -1,38 +1,71 @@
 ﻿using BankingAPI.DataAccess.Repositories.IRepositories;
+using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
 namespace BankingAPI.DataAccess.Repositories
 {
     public class Repository<T> : IRepository<T> where T : class
     {
-        public Task CreateAsync(T entity)
+        private readonly BankingDbContext _db;
+        internal DbSet<T> _dbSet;
+
+        public Repository(BankingDbContext db)
         {
-            throw new NotImplementedException();
+            _db = db;
+            this._dbSet = _db.Set<T>();
         }
 
-        public Task<List<T>> GetAllAsync(Expression<Func<T, bool>>? filter = null)
+        public async Task CreateAsync(T entity)
         {
-            throw new NotImplementedException();
+            await _dbSet.AddAsync(entity);
+            await SaveAsync();
         }
 
-        public Task<T> GetAsync(Expression<Func<T, bool>> filter, bool tracked = true)
+        public async Task<List<T>> GetAllAsync(Expression<Func<T, bool>>? filter = null)
         {
-            throw new NotImplementedException();
+            IQueryable<T> query = _dbSet;
+
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
+
+            return await query.ToListAsync();
         }
 
-        public Task RemoveAsync(T entity)
+        public async Task<T> GetAsync(Expression<Func<T, bool>> filter, bool tracked = true)
         {
-            throw new NotImplementedException();
+            IQueryable<T> query = _dbSet;
+
+            if (!tracked)
+            {
+                query = query.AsNoTracking();
+            }
+
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
+
+            return await query.FirstOrDefaultAsync();
         }
 
-        public Task SaveAsync()
+        public async Task RemoveAsync(T entity)
         {
-            throw new NotImplementedException();
+            _dbSet.Remove(entity);
+            await SaveAsync();
         }
 
-        public Task<T> UpdateAsync(T entity)
+        public async Task<T> UpdateAsync(T entity)
         {
-            throw new NotImplementedException();
+            _dbSet.Update(entity);
+            await SaveAsync();
+            return entity;
+        }
+
+        private async Task SaveAsync()
+        {
+            await _db.SaveChangesAsync();
         }
     }
 }

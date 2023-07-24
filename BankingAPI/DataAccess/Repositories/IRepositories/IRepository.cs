@@ -9,6 +9,5 @@ namespace BankingAPI.DataAccess.Repositories.IRepositories
         Task CreateAsync(T entity);
         Task<T> UpdateAsync(T entity);
         Task RemoveAsync(T entity);
-        Task SaveAsync();
     }
 }
