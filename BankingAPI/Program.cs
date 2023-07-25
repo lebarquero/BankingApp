@@ -20,7 +20,8 @@ builder.Services.AddAutoMapper(typeof(MappingConfig));
 builder.Services.AddScoped<IRepository<Cliente>, Repository<Cliente>>();
 
 builder.Services.AddControllers()
-    .AddJsonOptions(options => options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
+    .AddJsonOptions(options => options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()))
+    .AddNewtonsoftJson();
 
 var app = builder.Build();
 
