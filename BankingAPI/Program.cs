@@ -1,5 +1,8 @@
 using BankingAPI;
 using BankingAPI.DataAccess;
+using BankingAPI.DataAccess.Repositories;
+using BankingAPI.DataAccess.Repositories.IRepositories;
+using BankingAPI.Entities;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,6 +15,8 @@ builder.Services.AddDbContext<BankingDbContext>(options =>
 });
 
 builder.Services.AddAutoMapper(typeof(MappingConfig));
+
+builder.Services.AddScoped<IRepository<Cliente>, Repository<Cliente>>();
 
 builder.Services.AddControllers();
 

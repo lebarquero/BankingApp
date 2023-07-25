@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using BankingAPI.DataAccess;
+﻿using AutoMapper;
+using BankingAPI.DataAccess.Repositories.IRepositories;
+using BankingAPI.DTOs.Cliente;
 using BankingAPI.Entities;
+using Microsoft.AspNetCore.Mvc;
 
 namespace BankingAPI.Controllers
 {
@@ -14,111 +10,79 @@ namespace BankingAPI.Controllers
     [ApiController]
     public class ClientesController : ControllerBase
     {
-        private readonly BankingDbContext _context;
+        private readonly IRepository<Cliente> _repo;
+        private readonly IMapper _mapper;
 
-        public ClientesController(BankingDbContext context)
+        public ClientesController(IRepository<Cliente> repo, IMapper mapper)
         {
-            _context = context;
+            _repo = repo;
+            _mapper = mapper;
         }
 
         // GET: api/Clientes
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Cliente>>> GetClientes()
+        public async Task<ActionResult<IEnumerable<ClienteDTO>>> GetClientes()
         {
-          if (_context.Clientes == null)
-          {
-              return NotFound();
-          }
-            return await _context.Clientes.ToListAsync();
+            var list = await _repo.GetAllAsync();
+            if (list == null)
+            {
+                return NotFound();
+            }
+            return Ok(_mapper.Map<List<ClienteDTO>>(list));
         }
 
         // GET: api/Clientes/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Cliente>> GetCliente(int id)
+        public async Task<ActionResult<ClienteDTO>> GetCliente(int id)
         {
-          if (_context.Clientes == null)
-          {
-              return NotFound();
-          }
-            var cliente = await _context.Clientes.FindAsync(id);
-
-            if (cliente == null)
+            var entity = await GetEntity(id);
+            if (entity == null)
             {
                 return NotFound();
             }
-
-            return cliente;
-        }
-
-        // PUT: api/Clientes/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutCliente(int id, Cliente cliente)
-        {
-            if (id != cliente.ID)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(cliente).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ClienteExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            return Ok(_mapper.Map<ClienteDTO>(entity));
         }
 
         // POST: api/Clientes
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Cliente>> PostCliente(Cliente cliente)
+        public async Task<ActionResult<Cliente>> PostCliente(ClienteCreateDTO model)
         {
-          if (_context.Clientes == null)
-          {
-              return Problem("Entity set 'BankingDbContext.Clientes'  is null.");
-          }
-            _context.Clientes.Add(cliente);
-            await _context.SaveChangesAsync();
+            var entity = _mapper.Map<Cliente>(model);
+            await _repo.CreateAsync(entity);
+            return CreatedAtAction("GetCliente", new { id = entity.ID }, _mapper.Map<ClienteCreateDTO>(entity));
+        }
 
-            return CreatedAtAction("GetCliente", new { id = cliente.ID }, cliente);
+        // PUT: api/Clientes/5
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutCliente(int id, ClienteUpdateDTO model)
+        {
+            if (id != model.ID)
+            {
+                return BadRequest();
+            }
+            await _repo.UpdateAsync(_mapper.Map<Cliente>(model));
+            return NoContent();
         }
 
         // DELETE: api/Clientes/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCliente(int id)
         {
-            if (_context.Clientes == null)
-            {
-                return NotFound();
-            }
-            var cliente = await _context.Clientes.FindAsync(id);
-            if (cliente == null)
-            {
-                return NotFound();
-            }
-
-            _context.Clientes.Remove(cliente);
-            await _context.SaveChangesAsync();
-
+            var entity = await GetEntity(id);
+            await _repo.RemoveAsync(entity);
             return NoContent();
         }
 
-        private bool ClienteExists(int id)
+        private async Task<Cliente> GetEntity(int id)
         {
-            return (_context.Clientes?.Any(e => e.ID == id)).GetValueOrDefault();
+            var entity = await _repo.GetAsync(i => i.ID == id, tracked: false);
+
+            if (entity == null)
+                throw new KeyNotFoundException("No se encontró la información requerida");
+
+            return entity;
         }
     }
 }
