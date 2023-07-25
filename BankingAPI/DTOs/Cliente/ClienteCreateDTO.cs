@@ -9,6 +9,7 @@ namespace BankingAPI.DTOs.Cliente
         public int ID { get; set; }
 
         [StringLength(50, ErrorMessage = "La longuitud máxima permitida es de 50 caracteres")]
+        [Required(ErrorMessage = "El Nombre es requerido")]
         public string Nombre { get; set; } = null!;
 
         [EnumDataType(typeof(Genero), ErrorMessage = "Solo se permiten los siguientes valores: Femenino, Masculino")]
@@ -20,6 +21,7 @@ namespace BankingAPI.DTOs.Cliente
         public string? Identificacion { get; set; }
 
         [StringLength(50, ErrorMessage = "La longuitud máxima permitida es de 50 caracteres")]
+        [Required(ErrorMessage = "La Dirección es requerida")]
         public string Direccion { get; set; } = null!;
 
         [StringLength(9, MinimumLength = 9, ErrorMessage = "La longuitud debe ser de 9 digitos")]
@@ -28,8 +30,10 @@ namespace BankingAPI.DTOs.Cliente
 
         [StringLength(4, MinimumLength = 4, ErrorMessage = "La longuitud debe ser de 4 digitos")]
         [RegularExpression("^\\d+$", ErrorMessage = "Solo se permiten números")]
+        [Required(ErrorMessage = "La Contraseña es requerida")]
         public string Contrasena { get; set; } = null!;
 
+        [Required(ErrorMessage = "El Estado es requerido")]
         public bool Estado { get; set; }
     }
 }

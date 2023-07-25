@@ -9,6 +9,7 @@ namespace BankingAPI.Entities
         public int ID { get; set; }
 
         [StringLength(50)]
+        [Required(ErrorMessage = "El Nombre es requerido")]
         public string Nombre { get; set; } = null!;
 
         public Genero? Genero { get; set; }
@@ -19,6 +20,7 @@ namespace BankingAPI.Entities
         public string? Identificacion { get; set; }
 
         [StringLength(50)]
+        [Required(ErrorMessage = "La Dirección es requerida")]
         public string Direccion { get; set; } = null!;
 
         [StringLength(9)]
