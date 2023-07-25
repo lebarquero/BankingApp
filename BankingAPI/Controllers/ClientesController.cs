@@ -2,6 +2,7 @@
 using BankingAPI.DataAccess.Repositories.IRepositories;
 using BankingAPI.DTOs.Cliente;
 using BankingAPI.Entities;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BankingAPI.Controllers
@@ -63,6 +64,27 @@ namespace BankingAPI.Controllers
                 return BadRequest();
             }
             await _repo.UpdateAsync(_mapper.Map<Cliente>(model));
+            return NoContent();
+        }
+
+        [HttpPatch("{id}")]
+        public async Task<IActionResult> PatchCliente(int id, JsonPatchDocument<ClienteUpdateDTO> patchDTO)
+        {
+            if (patchDTO == null || id == 0)
+                return BadRequest();
+
+            var entity = await GetEntity(id);
+            var dtoToBeUpdated = _mapper.Map<ClienteUpdateDTO>(entity);
+
+            patchDTO.ApplyTo(dtoToBeUpdated, ModelState);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var entityUpdated = _mapper.Map<Cliente>(dtoToBeUpdated);
+            await _repo.UpdateAsync(entityUpdated);
+
             return NoContent();
         }
 
