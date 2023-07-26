@@ -10,5 +10,7 @@ namespace BankingAPI.Entities
 
         [Required(ErrorMessage = "El Estado es requerido")]
         public bool Estado { get; set; }
+
+        public virtual ICollection<Cuenta>? Cuentas { get; set; }
     }
 }
