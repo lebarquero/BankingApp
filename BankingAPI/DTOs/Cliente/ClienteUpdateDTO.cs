@@ -13,7 +13,7 @@ namespace BankingAPI.DTOs.Cliente
         public string Nombre { get; set; } = null!;
 
         [EnumDataType(typeof(Genero), ErrorMessage = "Solo se permiten los siguientes valores: Femenino, Masculino")]
-        public string Genero { get; set; } = null!;
+        public string? Genero { get; set; }
 
         public int? Edad { get; set; }
 
