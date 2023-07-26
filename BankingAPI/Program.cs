@@ -3,6 +3,7 @@ using BankingAPI.DataAccess;
 using BankingAPI.DataAccess.Repositories;
 using BankingAPI.DataAccess.Repositories.IRepositories;
 using BankingAPI.Entities;
+using BankingAPI.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
 
@@ -32,5 +33,8 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+// Custom Middleware to handle exceptions and logging
+app.UseMiddleware<ErrorHandlerMiddleware>();
 
 app.Run();

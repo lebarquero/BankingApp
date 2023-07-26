@@ -2,6 +2,7 @@
 using BankingAPI.DataAccess.Repositories.IRepositories;
 using BankingAPI.DTOs.Cliente;
 using BankingAPI.Entities;
+using BankingAPI.Infrastructure;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 
@@ -99,6 +100,9 @@ namespace BankingAPI.Controllers
 
         private async Task<Cliente> GetEntity(int id)
         {
+            if (id <= 0)
+                throw new BankingAppException("El identificador debe ser un número entero positivo");
+
             var entity = await _repo.GetAsync(i => i.ID == id, tracked: false);
 
             if (entity == null)
