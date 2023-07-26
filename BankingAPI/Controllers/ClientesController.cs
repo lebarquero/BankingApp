@@ -26,10 +26,6 @@ namespace BankingAPI.Controllers
         public async Task<ActionResult<IEnumerable<ClienteDTO>>> GetClientes()
         {
             var list = await _repo.GetAllAsync();
-            if (list == null)
-            {
-                return NotFound();
-            }
             return Ok(_mapper.Map<List<ClienteDTO>>(list));
         }
 
@@ -38,10 +34,6 @@ namespace BankingAPI.Controllers
         public async Task<ActionResult<ClienteDTO>> GetCliente(int id)
         {
             var entity = await GetEntity(id);
-            if (entity == null)
-            {
-                return NotFound();
-            }
             return Ok(_mapper.Map<ClienteDTO>(entity));
         }
 
@@ -50,6 +42,9 @@ namespace BankingAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<Cliente>> PostCliente(ClienteCreateDTO model)
         {
+            if (model == null)
+                throw new BankingAppException("Debe especificar los datos del nuevo elemento");
+
             var entity = _mapper.Map<Cliente>(model);
             await _repo.CreateAsync(entity);
             return CreatedAtAction("GetCliente", new { id = entity.ID }, _mapper.Map<ClienteCreateDTO>(entity));
@@ -61,18 +56,21 @@ namespace BankingAPI.Controllers
         public async Task<IActionResult> PutCliente(int id, ClienteUpdateDTO model)
         {
             if (id != model.ID)
-            {
-                return BadRequest();
-            }
-            await _repo.UpdateAsync(_mapper.Map<Cliente>(model));
+                throw new BankingAppException("Los identificadores deben de coincidir");
+
+            if (model == null)
+                throw new BankingAppException("Debe especificar los datos del elemento que desea modificar");
+
+            var entity = _mapper.Map<Cliente>(model);
+            await _repo.UpdateAsync(entity);
             return NoContent();
         }
 
         [HttpPatch("{id}")]
         public async Task<IActionResult> PatchCliente(int id, JsonPatchDocument<ClienteUpdateDTO> patchDTO)
         {
-            if (patchDTO == null || id == 0)
-                return BadRequest();
+            if (patchDTO == null)
+                throw new BankingAppException("Debe especificar los datos que desea modificar");
 
             var entity = await GetEntity(id);
             var dtoToBeUpdated = _mapper.Map<ClienteUpdateDTO>(entity);
