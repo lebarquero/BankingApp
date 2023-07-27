@@ -19,6 +19,8 @@ builder.Services.AddDbContext<BankingDbContext>(options =>
 builder.Services.AddAutoMapper(typeof(MappingConfig));
 
 builder.Services.AddScoped<IRepository<Cliente>, Repository<Cliente>>();
+builder.Services.AddScoped<IRepository<Cuenta>, Repository<Cuenta>>();
+builder.Services.AddScoped<IRepository<Movimiento>, Repository<Movimiento>>();
 
 builder.Services.AddControllers()
     .AddJsonOptions(options => options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()))
