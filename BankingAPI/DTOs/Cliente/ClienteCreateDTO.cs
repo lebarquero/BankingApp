@@ -5,9 +5,6 @@ namespace BankingAPI.DTOs.Cliente
 {
     public class ClienteCreateDTO
     {
-        [Key]
-        public int ID { get; set; }
-
         [StringLength(50, ErrorMessage = "La longuitud máxima permitida es de 50 caracteres")]
         [Required(ErrorMessage = "El Nombre es requerido")]
         public string Nombre { get; set; } = null!;

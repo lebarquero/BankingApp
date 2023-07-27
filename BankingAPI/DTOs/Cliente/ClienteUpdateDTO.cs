@@ -5,7 +5,7 @@ namespace BankingAPI.DTOs.Cliente
 {
     public class ClienteUpdateDTO
     {
-        [Key]
+        [Required(ErrorMessage = "El identificador es requerido")]
         public int ID { get; set; }
 
         [StringLength(50, ErrorMessage = "La longuitud máxima permitida es de 50 caracteres")]
