@@ -12,6 +12,7 @@ using BankingAPI.DataAccess.Repositories.IRepositories;
 using BankingAPI.DTOs.Movimiento;
 using BankingAPI.Infrastructure;
 using Microsoft.AspNetCore.JsonPatch;
+using BankingAPI.Business.IServices;
 
 namespace BankingAPI.Controllers
 {
@@ -19,12 +20,12 @@ namespace BankingAPI.Controllers
     [ApiController]
     public class MovimientosController : ControllerBase
     {
-        private readonly IRepository<Movimiento> _repo;
+        private readonly IService<Movimiento> _service;
         private readonly IMapper _mapper;
 
-        public MovimientosController(IRepository<Movimiento> repo, IMapper mapper)
+        public MovimientosController(IService<Movimiento> service, IMapper mapper)
         {
-            _repo = repo;
+            _service = service;
             _mapper = mapper;
         }
 
@@ -32,7 +33,7 @@ namespace BankingAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<MovimientoDTO>>> GetMovimientos()
         {
-            var list = await _repo.GetAllAsync();
+            var list = await _service.GetAllAsync();
             return Ok(_mapper.Map<List<MovimientoDTO>>(list));
         }
 
@@ -53,7 +54,7 @@ namespace BankingAPI.Controllers
                 throw new BankingAppException("Debe especificar los datos del nuevo elemento");
 
             var entity = _mapper.Map<Movimiento>(model);
-            await _repo.CreateAsync(entity);
+            await _service.CreateAsync(entity);
             return CreatedAtAction("GetMovimiento", new { id = entity.MovimientoID }, _mapper.Map<MovimientoCreateDTO>(entity));
         }
 
@@ -69,7 +70,7 @@ namespace BankingAPI.Controllers
                 throw new BankingAppException("Debe especificar los datos del elemento que desea modificar");
 
             var entity = _mapper.Map<Movimiento>(model);
-            await _repo.UpdateAsync(entity);
+            await _service.UpdateAsync(entity);
             return NoContent();
         }
 
@@ -89,7 +90,7 @@ namespace BankingAPI.Controllers
             }
 
             var entityUpdated = _mapper.Map<Movimiento>(dtoToBeUpdated);
-            await _repo.UpdateAsync(entityUpdated);
+            await _service.UpdateAsync(entityUpdated);
 
             return NoContent();
         }
@@ -99,7 +100,7 @@ namespace BankingAPI.Controllers
         public async Task<IActionResult> DeleteMovimiento(int id)
         {
             var entity = await GetEntity(id);
-            await _repo.RemoveAsync(entity);
+            await _service.RemoveAsync(entity);
             return NoContent();
         }
 
@@ -108,7 +109,7 @@ namespace BankingAPI.Controllers
             if (id <= 0)
                 throw new BankingAppException("El identificador debe ser un número entero positivo");
 
-            var entity = await _repo.GetAsync(i => i.MovimientoID == id, tracked: false);
+            var entity = await _service.GetAsync(id);
 
             if (entity == null)
                 throw new KeyNotFoundException("No se encontró la información requerida");
