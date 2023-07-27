@@ -8,7 +8,7 @@ namespace BankingAPI.DTOs.Movimiento
 
         public DateTime Fecha { get; set; }
 
-        public TipoMovimiento TipoMovimiento { get; set; }
+        public string TipoMovimiento { get; set; } = null!;
 
         public decimal Valor { get; set; }
 

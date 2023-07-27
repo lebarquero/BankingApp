@@ -1,4 +1,5 @@
 ﻿using BankingAPI.Entities.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace BankingAPI.DTOs.Cliente
 {
@@ -8,7 +9,7 @@ namespace BankingAPI.DTOs.Cliente
 
         public string Nombre { get; set; } = null!;
 
-        public Genero? Genero { get; set; }
+        public string? Genero { get; set; }
 
         public int? Edad { get; set; }
 

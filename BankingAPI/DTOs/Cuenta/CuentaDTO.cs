@@ -8,7 +8,7 @@ namespace BankingAPI.DTOs.Cuenta
     {
         public string NumeroCuenta { get; set; } = null!;
 
-        public TipoCuenta TipoCuenta { get; set; }
+        public string TipoCuenta { get; set; } = null!;
 
         public decimal SaldoInicial { get; set; }
 
