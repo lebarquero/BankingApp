@@ -1,0 +1,40 @@
+{
+	"info": {
+		"_postman_id": "e74815c7-9b89-42af-90a6-4447a89e5cab",
+		"name": "Reportes",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27908821"
+	},
+	"item": [
+		{
+			"name": "Get Transactions By Client",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:7112/Reportes/1?startDate=2023-07-27&endDate=2023-07-31",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7112",
+					"path": [
+						"Reportes",
+						"1"
+					],
+					"query": [
+						{
+							"key": "startDate",
+							"value": "2023-07-27"
+						},
+						{
+							"key": "endDate",
+							"value": "2023-07-31"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -1,0 +1,155 @@
+{
+	"info": {
+		"_postman_id": "abe4ca8d-5d63-4c92-a936-024a6eb4532b",
+		"name": "Cuentas",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27908821"
+	},
+	"item": [
+		{
+			"name": "Get All",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:7112/Cuentas",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7112",
+					"path": [
+						"Cuentas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"NumeroCuenta\":\"478758\",\r\n    \"TipoCuenta\":\"Ahorro\",\r\n    \"SaldoInicial\":2000,\r\n    \"Estado\":true,\r\n    \"ClienteID\":1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7112/Cuentas",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7112",
+					"path": [
+						"Cuentas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"NumeroCuenta\":\"478758\",\r\n    \"TipoCuenta\":\"Ahorro\",\r\n    \"SaldoInicial\":2000,\r\n    \"Estado\":true,\r\n    \"ClienteID\":1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7112/Cuentas/478758",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7112",
+					"path": [
+						"Cuentas",
+						"478758"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get by ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:7112/Cuentas/478758",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7112",
+					"path": [
+						"Cuentas",
+						"478758"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:7112/Cuentas/123456",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7112",
+					"path": [
+						"Cuentas",
+						"123456"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Partial Update",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n    {\r\n        \"op\":\"replace\",\r\n        \"path\":\"/SaldoInicial\",\r\n        \"value\":1500\r\n    }\r\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7112/Cuentas/478758",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7112",
+					"path": [
+						"Cuentas",
+						"478758"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

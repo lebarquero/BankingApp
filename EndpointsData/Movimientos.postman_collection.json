@@ -1,0 +1,155 @@
+{
+	"info": {
+		"_postman_id": "f1d12585-ed25-49c7-8e63-e884fe06a46e",
+		"name": "Movimientos",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27908821"
+	},
+	"item": [
+		{
+			"name": "Get All",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:7112/Movimientos",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7112",
+					"path": [
+						"Movimientos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"fecha\":\"07/27/2023\",\r\n    \"tipoMovimiento\":\"Debito\",\r\n    \"valor\":\"100\",\r\n    \"numeroCuenta\":\"478758\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7112/Movimientos",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7112",
+					"path": [
+						"Movimientos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"MovimientoID\":1,\r\n    \"fecha\":\"07/27/2023\",\r\n    \"tipoMovimiento\":\"Credito\",\r\n    \"valor\":\"200\",\r\n    \"numeroCuenta\":\"478758\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7112/Movimientos/1",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7112",
+					"path": [
+						"Movimientos",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get by ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:7112/Movimientos/2",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7112",
+					"path": [
+						"Movimientos",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:7112/Movimientos/1",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7112",
+					"path": [
+						"Movimientos",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Partial Update",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n    {\r\n        \"op\":\"add\",\r\n        \"path\":\"/valor\",\r\n        \"value\":150\r\n    }\r\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7112/Movimientos/2",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7112",
+					"path": [
+						"Movimientos",
+						"2"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

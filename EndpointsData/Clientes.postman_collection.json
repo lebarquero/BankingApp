@@ -1,0 +1,155 @@
+{
+	"info": {
+		"_postman_id": "528967c4-f316-4888-83d8-e73ae9ce61a2",
+		"name": "Clientes",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27908821"
+	},
+	"item": [
+		{
+			"name": "Get All",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:7112/Clientes",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7112",
+					"path": [
+						"Clientes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Nombre\":\"Jose Lema\",\r\n    \"Genero\":\"Masculino\",\r\n    \"Edad\":0,\r\n    \"Identificacion\":\"\",\r\n    \"Direccion\":\"Otavalo sn y principal\",\r\n    \"Telefono\":\"098254785\",\r\n    \"Contrasena\":\"1234\",\r\n    \"Estado\":true\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7112/Clientes",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7112",
+					"path": [
+						"Clientes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\":1,\r\n    \"Nombre\":\"Jose Lema\",\r\n    \"Genero\":\"Masculino\",\r\n    \"Edad\":45,\r\n    \"Identificacion\":\"82725265\",\r\n    \"Direccion\":\"Otavalo sn y principal\",\r\n    \"Telefono\":\"098254785\",\r\n    \"Contrasena\":\"1234\",\r\n    \"Estado\":true\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7112/Clientes/1",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7112",
+					"path": [
+						"Clientes",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get by ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:7112/Clientes/1",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7112",
+					"path": [
+						"Clientes",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:7112/Clientes/2",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7112",
+					"path": [
+						"Clientes",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Partial Update",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n    {\r\n        \"op\":\"add\",\r\n        \"path\":\"/contrasena\",\r\n        \"value\":\"6543\"\r\n    }\r\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7112/Clientes/1",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7112",
+					"path": [
+						"Clientes",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
