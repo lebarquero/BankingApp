@@ -52,8 +52,8 @@ namespace BankingAPI.Business
                     Fecha = i.Fecha,
                     Cliente = i.Cuenta.Cliente.Nombre,
                     NumeroCuenta = i.NumeroCuenta,
-                    Tipo = i.TipoMovimiento.ToString(),
-                    SaldoInicial = 0,
+                    Tipo = i.Cuenta.TipoCuenta.ToString(),
+                    SaldoInicial = i.TipoMovimiento == TipoMovimiento.Debito ? i.Saldo + i.Valor : i.Saldo - i.Valor,
                     Estado = i.Cuenta.Estado,
                     Movimiento = i.Valor,
                     SaldoDisponible = i.Saldo
