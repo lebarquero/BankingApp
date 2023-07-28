@@ -19,6 +19,6 @@ La solución cuenta con los siguiente proyectos:
 2. **Banking.DataAccess:**
    Es un proyecto de tipo Class Library, el cual contiene los elementos requeridos para la persistencia y acceso a los datos.
 3. **Banking.Entities:**
-   Es un proyecto de tipo Class Library, el cual contiene las entidades del dominio de negocio
+   Es un proyecto de tipo Class Library, el cual contiene las entidades del dominio del negocio.
 4. **BankingAPI:**
    Es un proyecto de tipo ASP .NET WebAPI, el cual contiene los contralodres que manejan las peticiones de los usuarios.
