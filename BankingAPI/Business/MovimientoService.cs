@@ -26,7 +26,7 @@ namespace BankingAPI.Business
         {
             Cuenta cuenta = await GetCuentaAsync(movimiento.NumeroCuenta);
             await ValidarMovimientoAsync(movimiento, cuenta);
-            UpdateCuenta(movimiento, cuenta, revert: true);
+            UpdateCuenta(movimiento, cuenta);
 
             movimiento.Saldo = cuenta.SaldoInicial;
 
@@ -61,7 +61,7 @@ namespace BankingAPI.Business
         {
             Cuenta cuenta = await GetCuentaAsync(movimiento.NumeroCuenta);
             await ValidarMovimientoAsync(movimiento, cuenta);
-            UpdateCuenta(movimiento, cuenta, revert: true);
+            UpdateCuenta(movimiento, cuenta);
 
             movimiento.Saldo = cuenta.SaldoInicial;
 
@@ -119,10 +119,10 @@ namespace BankingAPI.Business
                                                                i.Fecha.Date == DateTime.Today);
 
                 if ((debitosDeHoy.Sum(i => i.Valor) + movimiento.Valor) > LimiteDiarioDeRetiro)
-                    return false;
+                    return true;
             }
 
-            return true;
+            return false;
         }
     }
 }
