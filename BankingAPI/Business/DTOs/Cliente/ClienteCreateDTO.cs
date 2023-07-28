@@ -1,13 +1,10 @@
 ﻿using BankingAPI.Entities.Enums;
 using System.ComponentModel.DataAnnotations;
 
-namespace BankingAPI.DTOs.Cliente
+namespace BankingAPI.Business.DTOs.Cliente
 {
-    public class ClienteUpdateDTO
+    public class ClienteCreateDTO
     {
-        [Required(ErrorMessage = "El identificador es requerido")]
-        public int ID { get; set; }
-
         [StringLength(50, ErrorMessage = "La longuitud máxima permitida es de 50 caracteres")]
         [Required(ErrorMessage = "El Nombre es requerido")]
         public string Nombre { get; set; } = null!;

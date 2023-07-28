@@ -1,5 +1,5 @@
-﻿using BankingAPI.Business.IServices;
-using BankingAPI.DTOs.Movimiento;
+﻿using BankingAPI.Business.DTOs.Movimiento;
+using BankingAPI.Business.IServices;
 using BankingAPI.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

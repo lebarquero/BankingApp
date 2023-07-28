@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using BankingAPI.DTOs.Cliente;
-using BankingAPI.DTOs.Cuenta;
-using BankingAPI.DTOs.Movimiento;
+using BankingAPI.Business.DTOs.Cliente;
+using BankingAPI.Business.DTOs.Cuenta;
+using BankingAPI.Business.DTOs.Movimiento;
 using BankingAPI.Entities;
 
 namespace BankingAPI

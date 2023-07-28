@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
-namespace BankingAPI.DTOs.Cuenta
+namespace BankingAPI.Business.DTOs.Cuenta
 {
     public class CuentaDTO
     {

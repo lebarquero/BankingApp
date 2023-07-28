@@ -1,6 +1,6 @@
 ﻿using BankingAPI.Entities.Enums;
 
-namespace BankingAPI.DTOs.Movimiento
+namespace BankingAPI.Business.DTOs.Movimiento
 {
     public class MovimientoDTO
     {

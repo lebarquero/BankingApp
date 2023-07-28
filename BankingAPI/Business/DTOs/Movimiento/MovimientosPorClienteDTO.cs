@@ -1,4 +1,4 @@
-﻿namespace BankingAPI.DTOs.Movimiento
+﻿namespace BankingAPI.Business.DTOs.Movimiento
 {
     public class MovimientosPorClienteDTO
     {

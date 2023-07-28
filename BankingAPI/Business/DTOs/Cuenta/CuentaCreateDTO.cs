@@ -1,11 +1,11 @@
 ﻿using BankingAPI.Entities.Enums;
 using System.ComponentModel.DataAnnotations;
 
-namespace BankingAPI.DTOs.Cuenta
+namespace BankingAPI.Business.DTOs.Cuenta
 {
-    public class CuentaUpdateDTO
+    public class CuentaCreateDTO
     {
-        [StringLength(6, MinimumLength = 6, ErrorMessage = "La longuitud del número de cuenta debe ser de digitos")]
+        [StringLength(6, MinimumLength = 6, ErrorMessage = "La longuitud del número de cuenta debe ser de 6 digitos")]
         [Required(ErrorMessage = "El número de cuenta es requerido")]
         [RegularExpression("^\\d+$", ErrorMessage = "Solo se permiten números")]
         public string NumeroCuenta { get; set; } = null!;

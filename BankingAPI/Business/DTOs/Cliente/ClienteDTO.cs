@@ -1,7 +1,7 @@
 ﻿using BankingAPI.Entities.Enums;
 using System.ComponentModel.DataAnnotations;
 
-namespace BankingAPI.DTOs.Cliente
+namespace BankingAPI.Business.DTOs.Cliente
 {
     public class ClienteDTO
     {

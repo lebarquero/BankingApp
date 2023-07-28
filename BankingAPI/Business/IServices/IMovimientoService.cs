@@ -1,4 +1,4 @@
-﻿using BankingAPI.DTOs.Movimiento;
+﻿using BankingAPI.Business.DTOs.Movimiento;
 using BankingAPI.Entities;
 
 namespace BankingAPI.Business.IServices

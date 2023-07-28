@@ -1,7 +1,7 @@
-﻿using BankingAPI.Business.IServices;
+﻿using BankingAPI.Business.DTOs.Movimiento;
+using BankingAPI.Business.IServices;
 using BankingAPI.DataAccess;
 using BankingAPI.DataAccess.Repositories.IRepositories;
-using BankingAPI.DTOs.Movimiento;
 using BankingAPI.Entities;
 using BankingAPI.Entities.Enums;
 using BankingAPI.Infrastructure;

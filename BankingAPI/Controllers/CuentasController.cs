@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
+using BankingAPI.Business.DTOs.Cuenta;
 using BankingAPI.DataAccess;
 using BankingAPI.DataAccess.Repositories.IRepositories;
-using BankingAPI.DTOs.Cuenta;
 using BankingAPI.Entities;
 using BankingAPI.Infrastructure;
 using Microsoft.AspNetCore.JsonPatch;

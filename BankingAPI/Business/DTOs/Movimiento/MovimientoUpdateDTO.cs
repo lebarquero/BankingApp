@@ -1,10 +1,13 @@
 ﻿using BankingAPI.Entities.Enums;
 using System.ComponentModel.DataAnnotations;
 
-namespace BankingAPI.DTOs.Movimiento
+namespace BankingAPI.Business.DTOs.Movimiento
 {
-    public class MovimientoCreateDTO
+    public class MovimientoUpdateDTO
     {
+        [Required(ErrorMessage = "El identificador es requerido")]
+        public int MovimientoID { get; set; }
+
         [Required(ErrorMessage = "La fecha es requerida")]
         public DateTime Fecha { get; set; }
 

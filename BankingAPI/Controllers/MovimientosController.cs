@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
+using BankingAPI.Business.DTOs.Movimiento;
 using BankingAPI.Business.IServices;
-using BankingAPI.DTOs.Movimiento;
 using BankingAPI.Entities;
 using BankingAPI.Infrastructure;
 using Microsoft.AspNetCore.JsonPatch;
