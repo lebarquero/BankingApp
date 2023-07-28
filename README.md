@@ -14,11 +14,11 @@
    En la carpeta _EndpointsData_ del repositorio se encuentran los archivos json de Postman
 ## Breve Descripción
 La solución cuenta con los siguiente proyectos:
-1. Banking.Business
+1. **Banking.Business**
    Es un proyecto de tipo Class Library, el cual contiene los servicios de lógica de negocio.
-2. Banking.DataAccess
+2. **Banking.DataAccess**
    Es un proyecto de tipo Class Library, el cual contiene los elementos requeridos para la persistencia y acceso a los datos.
-3. Banking.Entities
+3. **Banking.Entities**
    Es un proyecto de tipo Class Library, el cual contiene las entidades del dominio de negocio
-4. BankingAPI
+4. **BankingAPI**
    Es un proyecto de tipo ASP .NET WebAPI, el cual contiene los contralodres que manejan las peticiones de los usuarios.
