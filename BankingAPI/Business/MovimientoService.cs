@@ -1,27 +1,39 @@
 ﻿using BankingAPI.Business.IServices;
+using BankingAPI.DataAccess;
 using BankingAPI.DataAccess.Repositories.IRepositories;
 using BankingAPI.DTOs.Movimiento;
 using BankingAPI.Entities;
 using BankingAPI.Entities.Enums;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.SqlClient;
-using Microsoft.EntityFrameworkCore;
-using System.Linq.Expressions;
+using BankingAPI.Infrastructure;
 
 namespace BankingAPI.Business
 {
     public class MovimientoService : IMovimientoService
     {
         private readonly IRepository<Movimiento> _repo;
+        private readonly IRepository<Cuenta> _cuentaRepo;
+        private readonly IUnitOfWork _unitOfWork;
+        const int LimiteDiarioDeRetiro = 1000;
 
-        public MovimientoService(IRepository<Movimiento> repo)
+        public MovimientoService(IUnitOfWork unitOfWork)
         {
-            _repo = repo;
+            _unitOfWork = unitOfWork;
+            _repo = _unitOfWork.GetRepository<Movimiento>();
+            _cuentaRepo = _unitOfWork.GetRepository<Cuenta>();
         }
 
-        public async Task CreateAsync(Movimiento entity)
+        public async Task CreateAsync(Movimiento movimiento)
         {
-            await _repo.CreateAsync(entity);
+            Cuenta cuenta = await GetCuentaAsync(movimiento.NumeroCuenta);
+            await ValidarMovimientoAsync(movimiento, cuenta);
+            UpdateCuenta(movimiento, cuenta, revert: true);
+
+            movimiento.Saldo = cuenta.SaldoInicial;
+
+            await _cuentaRepo.UpdateAsync(cuenta);
+            await _repo.CreateAsync(movimiento);
+
+            await _unitOfWork.SaveAsync();
         }
 
         public async Task<IEnumerable<Movimiento>> GetAllAsync()
@@ -34,14 +46,29 @@ namespace BankingAPI.Business
             return await _repo.GetAsync(i => i.MovimientoID == id, tracked: false);
         }
 
-        public async Task RemoveAsync(Movimiento entity)
+        public async Task RemoveAsync(Movimiento movimiento)
         {
-            await _repo.RemoveAsync(entity);
+            Cuenta cuenta = await GetCuentaAsync(movimiento.NumeroCuenta);
+            UpdateCuenta(movimiento, cuenta, revert: true);
+
+            await _cuentaRepo.UpdateAsync(cuenta);
+            await _repo.RemoveAsync(movimiento);
+
+            await _unitOfWork.SaveAsync();
         }
 
-        public async Task UpdateAsync(Movimiento entity)
+        public async Task UpdateAsync(Movimiento movimiento)
         {
-            await _repo.UpdateAsync(entity);
+            Cuenta cuenta = await GetCuentaAsync(movimiento.NumeroCuenta);
+            await ValidarMovimientoAsync(movimiento, cuenta);
+            UpdateCuenta(movimiento, cuenta, revert: true);
+
+            movimiento.Saldo = cuenta.SaldoInicial;
+
+            await _cuentaRepo.UpdateAsync(cuenta);
+            await _repo.UpdateAsync(movimiento);
+
+            await _unitOfWork.SaveAsync();
         }
 
         public async Task<List<MovimientosPorClienteDTO>> GetMovimientosPorClienteAsync(int clienteId, DateTime startDate, DateTime endDate)
@@ -55,9 +82,47 @@ namespace BankingAPI.Business
                     Tipo = i.Cuenta.TipoCuenta.ToString(),
                     SaldoInicial = i.TipoMovimiento == TipoMovimiento.Debito ? i.Saldo + i.Valor : i.Saldo - i.Valor,
                     Estado = i.Cuenta.Estado,
-                    Movimiento = i.Valor,
+                    Movimiento = i.TipoMovimiento == TipoMovimiento.Debito ? -i.Valor : i.Valor,
                     SaldoDisponible = i.Saldo
                 }).ToList();
+        }
+
+        private async Task<Cuenta> GetCuentaAsync(string numeroCuenta) => await _cuentaRepo.GetAsync(c => c.NumeroCuenta == numeroCuenta);
+
+        private void UpdateCuenta(Movimiento movimiento, Cuenta cuenta, bool revert = false)
+        {
+            if (!revert)
+            {
+                cuenta.SaldoInicial += movimiento.TipoMovimiento == TipoMovimiento.Debito ? -movimiento.Valor : movimiento.Valor;
+            }
+            else
+            {
+                cuenta.SaldoInicial += movimiento.TipoMovimiento == TipoMovimiento.Debito ? movimiento.Valor : -movimiento.Valor;
+            }
+        }
+
+        private async Task ValidarMovimientoAsync(Movimiento movimiento, Cuenta cuenta)
+        {
+            if (movimiento.TipoMovimiento == TipoMovimiento.Debito && (cuenta.SaldoInicial - movimiento.Valor) < 0)
+                throw new BankingAppException("Saldo no disponible");
+
+            if (await CupoExcedidoAsync(movimiento))
+                throw new BankingAppException("Cupo diario excedido");
+        }
+
+        private async Task<bool> CupoExcedidoAsync(Movimiento movimiento)
+        {
+            if (movimiento.TipoMovimiento == TipoMovimiento.Debito)
+            {
+                var debitosDeHoy = await _repo.GetAllAsync(i => i.TipoMovimiento == TipoMovimiento.Debito &&
+                                                               i.NumeroCuenta == movimiento.NumeroCuenta &&
+                                                               i.Fecha.Date == DateTime.Today);
+
+                if ((debitosDeHoy.Sum(i => i.Valor) + movimiento.Valor) > LimiteDiarioDeRetiro)
+                    return false;
+            }
+
+            return true;
         }
     }
 }

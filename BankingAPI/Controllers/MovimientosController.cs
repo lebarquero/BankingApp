@@ -1,18 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using BankingAPI.DataAccess;
-using BankingAPI.Entities;
-using AutoMapper;
-using BankingAPI.DataAccess.Repositories.IRepositories;
+﻿using AutoMapper;
+using BankingAPI.Business.IServices;
 using BankingAPI.DTOs.Movimiento;
+using BankingAPI.Entities;
 using BankingAPI.Infrastructure;
 using Microsoft.AspNetCore.JsonPatch;
-using BankingAPI.Business.IServices;
+using Microsoft.AspNetCore.Mvc;
 
 namespace BankingAPI.Controllers
 {
