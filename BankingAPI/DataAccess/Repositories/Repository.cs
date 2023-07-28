@@ -18,7 +18,6 @@ namespace BankingAPI.DataAccess.Repositories
         public async Task CreateAsync(T entity)
         {
             await _dbSet.AddAsync(entity);
-            await SaveAsync();
         }
 
         public async Task<List<T>> GetAllAsync(Expression<Func<T, bool>>? filter = null, params Expression<Func<T, object>>[] includeProperties)
@@ -58,19 +57,13 @@ namespace BankingAPI.DataAccess.Repositories
         public async Task RemoveAsync(T entity)
         {
             _dbSet.Remove(entity);
-            await SaveAsync();
+            await Task.CompletedTask;
         }
 
-        public async Task<T> UpdateAsync(T entity)
+        public async Task UpdateAsync(T entity)
         {
             _dbSet.Update(entity);
-            await SaveAsync();
-            return entity;
-        }
-
-        private async Task SaveAsync()
-        {
-            await _db.SaveChangesAsync();
+            await Task.CompletedTask;
         }
     }
 }
