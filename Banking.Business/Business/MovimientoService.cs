@@ -1,4 +1,5 @@
 ﻿using BankingAPI.Business.DTOs.Movimiento;
+using BankingAPI.Business.Exceptions;
 using BankingAPI.Business.IServices;
 using BankingAPI.DataAccess;
 using BankingAPI.DataAccess.Repositories.IRepositories;

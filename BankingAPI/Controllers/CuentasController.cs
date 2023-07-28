@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using BankingAPI.Business.DTOs.Cuenta;
+using BankingAPI.Business.Exceptions;
 using BankingAPI.DataAccess;
 using BankingAPI.DataAccess.Repositories.IRepositories;
 using BankingAPI.Entities;
-using BankingAPI.Infrastructure;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 
