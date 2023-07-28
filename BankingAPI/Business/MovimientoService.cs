@@ -4,7 +4,6 @@ using BankingAPI.DataAccess;
 using BankingAPI.DataAccess.Repositories.IRepositories;
 using BankingAPI.Entities;
 using BankingAPI.Entities.Enums;
-using BankingAPI.Infrastructure;
 
 namespace BankingAPI.Business
 {

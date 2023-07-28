@@ -1,5 +1,6 @@
 ﻿using System.Net;
 using System.Text.Json;
+using BankingAPI.Business.Exceptions;
 
 namespace BankingAPI.Infrastructure
 {

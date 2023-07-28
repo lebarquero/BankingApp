@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
 
-namespace BankingAPI.Infrastructure
+namespace BankingAPI.Business.Exceptions
 {
     public class BankingAppException : Exception
     {
@@ -12,7 +12,7 @@ namespace BankingAPI.Infrastructure
 
         public BankingAppException(string message, params object[] args) : base(string.Format(CultureInfo.CurrentCulture, message, args))
         {
-            
+
         }
     }
 }
