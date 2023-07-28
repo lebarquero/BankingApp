@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankingAPI", "BankingAPI\Ba
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Banking.Entities", "Banking.Entities\Banking.Entities.csproj", "{AC6A5639-DFA0-40A9-9574-7ADB65491A8E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Banking.DataAccess", "Banking.DataAccess\Banking.DataAccess.csproj", "{1398FC41-A5DE-43B1-B169-D3DDA773342E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{AC6A5639-DFA0-40A9-9574-7ADB65491A8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AC6A5639-DFA0-40A9-9574-7ADB65491A8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AC6A5639-DFA0-40A9-9574-7ADB65491A8E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1398FC41-A5DE-43B1-B169-D3DDA773342E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1398FC41-A5DE-43B1-B169-D3DDA773342E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1398FC41-A5DE-43B1-B169-D3DDA773342E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1398FC41-A5DE-43B1-B169-D3DDA773342E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
