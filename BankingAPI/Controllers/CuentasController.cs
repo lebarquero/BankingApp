@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
 using BankingAPI.DataAccess;
-using BankingAPI.Entities;
-using AutoMapper;
 using BankingAPI.DataAccess.Repositories.IRepositories;
 using BankingAPI.DTOs.Cuenta;
+using BankingAPI.Entities;
 using BankingAPI.Infrastructure;
 using Microsoft.AspNetCore.JsonPatch;
+using Microsoft.AspNetCore.Mvc;
 
 namespace BankingAPI.Controllers
 {
@@ -21,10 +15,12 @@ namespace BankingAPI.Controllers
     {
         private readonly IRepository<Cuenta> _repo;
         private readonly IMapper _mapper;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public CuentasController(IRepository<Cuenta> repo, IMapper mapper)
+        public CuentasController(IUnitOfWork unitOfWork, IMapper mapper)
         {
-            _repo = repo;
+            _unitOfWork = unitOfWork;
+            _repo = _unitOfWork.GetRepository<Cuenta>();
             _mapper = mapper;
         }
 
@@ -57,6 +53,7 @@ namespace BankingAPI.Controllers
 
             var entity = _mapper.Map<Cuenta>(model);
             await _repo.UpdateAsync(entity);
+            await _unitOfWork.SaveAsync();
             return NoContent();
         }
 
@@ -70,6 +67,7 @@ namespace BankingAPI.Controllers
 
             var entity = _mapper.Map<Cuenta>(model);
             await _repo.CreateAsync(entity);
+            await _unitOfWork.SaveAsync();
             return CreatedAtAction("GetCuenta", new { id = entity.NumeroCuenta }, _mapper.Map<CuentaCreateDTO>(entity));
         }
 
@@ -90,6 +88,7 @@ namespace BankingAPI.Controllers
 
             var entityUpdated = _mapper.Map<Cuenta>(dtoToBeUpdated);
             await _repo.UpdateAsync(entityUpdated);
+            await _unitOfWork.SaveAsync();
 
             return NoContent();
         }
@@ -100,6 +99,7 @@ namespace BankingAPI.Controllers
         {
             var entity = await GetEntity(id);
             await _repo.RemoveAsync(entity);
+            await _unitOfWork.SaveAsync();
             return NoContent();
         }
 

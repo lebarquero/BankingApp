@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BankingAPI.DataAccess;
 using BankingAPI.DataAccess.Repositories.IRepositories;
 using BankingAPI.DTOs.Cliente;
 using BankingAPI.Entities;
@@ -14,10 +15,12 @@ namespace BankingAPI.Controllers
     {
         private readonly IRepository<Cliente> _repo;
         private readonly IMapper _mapper;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public ClientesController(IRepository<Cliente> repo, IMapper mapper)
+        public ClientesController(IUnitOfWork unitOfWork, IMapper mapper)
         {
-            _repo = repo;
+            _unitOfWork = unitOfWork;
+            _repo = _unitOfWork.GetRepository<Cliente>();
             _mapper = mapper;
         }
 
@@ -47,6 +50,7 @@ namespace BankingAPI.Controllers
 
             var entity = _mapper.Map<Cliente>(model);
             await _repo.CreateAsync(entity);
+            await _unitOfWork.SaveAsync();
             return CreatedAtAction("GetCliente", new { id = entity.ID }, _mapper.Map<ClienteCreateDTO>(entity));
         }
 
@@ -63,6 +67,7 @@ namespace BankingAPI.Controllers
 
             var entity = _mapper.Map<Cliente>(model);
             await _repo.UpdateAsync(entity);
+            await _unitOfWork.SaveAsync();
             return NoContent();
         }
 
@@ -83,6 +88,7 @@ namespace BankingAPI.Controllers
 
             var entityUpdated = _mapper.Map<Cliente>(dtoToBeUpdated);
             await _repo.UpdateAsync(entityUpdated);
+            await _unitOfWork.SaveAsync();
 
             return NoContent();
         }
@@ -93,6 +99,7 @@ namespace BankingAPI.Controllers
         {
             var entity = await GetEntity(id);
             await _repo.RemoveAsync(entity);
+            await _unitOfWork.SaveAsync();
             return NoContent();
         }
 
